@@ -20,6 +20,13 @@ public record RestBean<T>(int code,T data,String message) {
         return new RestBean<>(code,null,message);
     }
 
+    public static <T> RestBean<T> unauthorized(String message){
+        return new RestBean<>(401,null,message);
+    }
+
+    public static <T> RestBean<T> forbidden(String message){
+        return new RestBean<>(403,null,message);
+    }
 
 
     public String asJsonString(){
