@@ -1,8 +1,10 @@
 package com.example.config;
 
+import com.example.entity.dto.Account;
 import com.example.entity.rest.RestBean;
 import com.example.entity.vo.response.AuthorizeVo;
 import com.example.filter.JwtAuthorizeFilter;
+import com.example.service.AccountService;
 import com.example.utils.JwtUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,6 +36,8 @@ public class SecurityConfiguration {
     private JwtUtils jwtUtils;
     @Resource
     private JwtAuthorizeFilter jwtAuthorizeFilter;
+    @Resource
+    private AccountService accountService;
 
 
     @Bean
@@ -95,13 +99,28 @@ public class SecurityConfiguration {
         response.setContentType("application/json;charset=utf-8");
 
        User user = (User) authentication.getPrincipal();
-       String token = jwtUtils.creatJwt(user,1,"小明");
+        Account account = accountService.findAccountByUsernameOrEmail(user.getUsername());
+        String token = jwtUtils.creatJwt(user,account.getId(),account.getUsername());
 
+        //方案三
+        AuthorizeVo vo = account.asViewObject(AuthorizeVo.class,v->{
+            v.setExpire(jwtUtils.expireTime());
+            v.setToken(token);
+        });
+
+       /*方案二
+        AuthorizeVo vo = new AuthorizeVo();
+        BeanUtils.copyProperties(account,vo);  OR  AuthorizeVo vo = account.asViewObject(AuthorizeVo.class);
+        vo.setExpire(jwtUtils.expireTime());
+        vo.setToken(token);*/
+
+
+       /* 方案一
         AuthorizeVo vo = new AuthorizeVo();
         vo.setExpire(jwtUtils.expireTime());
-        vo.setRole("USER");
+        vo.setRole(account.getRole());
         vo.setToken(token);
-        vo.setUsername("小明");
+        vo.setUsername(account.getUsername());*/
 
         response.getWriter().write(RestBean.success(vo).asJsonString());
     }

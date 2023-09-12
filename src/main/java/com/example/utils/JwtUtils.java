@@ -80,7 +80,6 @@ public class JwtUtils {
      * @param headerToken 请求头token信息
      * @return 结果
      */
-
     public boolean invalidateJwt(String headerToken){
         String token = this.convertToken(headerToken);
         if(token == null) return false;
@@ -104,8 +103,11 @@ public class JwtUtils {
     private boolean deleteToken(String uuid,Date time){
         if (this.isInvalidToken(uuid))
             return false;
+        //获取现在的时间
         Date nowTime = new Date();
+        //计算剩余时间
         long expire = Math.max(time.getTime() - nowTime.getTime(),0);
+        //存入Redis
         stringRedisTemplate.opsForValue().set(Const.JWT_BLACK_LIST + uuid,"",expire, TimeUnit.MICROSECONDS);
         return true;
     }
@@ -131,6 +133,7 @@ public class JwtUtils {
         JWTVerifier jwtVerifier = JWT.require(algorithm).build();
         try {
             DecodedJWT verify = jwtVerifier.verify(token);
+            //如果token已经过期则不需进行剩余的操作直接返回null
             if (this.isInvalidToken(verify.getId()))
                 return null;
             Date expiresAt = verify.getExpiresAt();
