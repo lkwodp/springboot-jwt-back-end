@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
+ * 处理validateException异常，返回标准数据
  * @author blbyd_li
  * @data 2023/9/15
  * @apiNote

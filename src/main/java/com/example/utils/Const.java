@@ -15,4 +15,10 @@ public class Const {
     public static final String VERIFY_EMAIL_DATA = "verify:email:data";
     //跨域cors拦截器优先级
     public static final int ORDER_CORS = -102;
+    //限流拦截器优先级
+    public static final int ORDER_LIMIT = -101;
+    //请求限流计数器
+    public static final String FLOW_LIMIT_COUNTER = "flow:counter";
+    //IP封禁标志
+    public static final String FLOW_LIMIT_BLOCK = "flow:block";
 }

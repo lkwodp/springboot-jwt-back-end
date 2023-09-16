@@ -5,6 +5,7 @@ import com.example.entity.dto.Account;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
+ * AccountMapper
  * @author blbyd_li
  * @data 2023/9/10
  * @apiNote
