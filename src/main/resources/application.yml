@@ -1,6 +1,16 @@
 server:
   port: 9030
 spring:
+  mail:
+    host: smtp.163.com
+    username: lwd_kop@163.com
+    password: GNPEKSKNWNFBGIZF
+  rabbitmq:
+    host: 192.168.64.152
+    username: admin
+    password: admin
+    port: 5672
+    virtual-host: /
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root

@@ -45,7 +45,7 @@ public class SecurityConfiguration {
         return httpSecurity
                 //对于所有的链接
                 .authorizeHttpRequests(conf -> conf
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**","/error").permitAll()
                         .anyRequest().authenticated()
                 )
                 //登录

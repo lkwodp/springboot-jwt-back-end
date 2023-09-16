@@ -21,6 +21,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * JWT令牌工具类
  * @author blbyd_li
  * @data 2023/9/8
  * @apiNote
